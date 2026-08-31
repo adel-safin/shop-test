@@ -1,0 +1,34 @@
+---
+description: Правила работы с гонками, транзакциями и идемпотентностью
+globs: src/**/*.js
+alwaysApply: false
+---
+
+# Конкурентность
+
+Инвариант живёт в схеме БД, а не в JS. Проверка через `select` и последующая запись - это гонка, между ними влезет другой запрос.
+
+```js
+// плохо
+const { rows } = await db.query('select used_count, max_uses from promocodes where code = $1', [code]);
+if (rows[0].used_count < rows[0].max_uses) {
+  await db.query('update promocodes set used_count = used_count + 1 where code = $1', [code]);
+}
+
+// хорошо
+const { rows } = await db.query(
+  'update promocodes set used_count = used_count + 1 where code = $1 and used_count < max_uses returning *',
+  [code],
+);
+if (rows.length === 0) throw new AppError('promo_limit_reached');
+```
+
+Раздача из пула - только `for update skip locked`, иначе два воркера возьмут одну строку.
+
+Уникальный индекс это не «на всякий случай», а второй барьер. Ловим нарушение по коду `23505` и трактуем как «уже сделано», а не как падение.
+
+HTTP-вызов внутри открытой транзакции запрещён. Блокировка строки будет держаться всё время сети, при таймауте поставщика встанет весь заказ. Разбивай: транзакция - вызов - транзакция.
+
+Ключ идемпотентности выводится из данных (`req_${orderId}`), а не генерируется заново на каждой попытке. Иначе ретрай после таймаута создаст вторую выдачу.
+
+Ошибку транзакции не глушим. `catch` без обработки и `catch` ради «пусть вернёт 200» запрещены: вебхук должен получить 5xx, чтобы платёжка повторила.

@@ -1,0 +1,233 @@
+.services {
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  box-shadow: var(--shadow-card);
+}
+
+.services__list {
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.service {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+/* Интерактив 4: плавное выделение иконок сервисов при наведении. */
+.service__icon {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  overflow: hidden;
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+
+.service__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.service__icon--more {
+  background: var(--field);
+  color: #7a7a86;
+}
+
+.service__icon--more svg { width: 28px; height: 28px; fill: currentColor; }
+
+.service:hover .service__icon {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: var(--shadow-hover);
+}
+
+.service__name {
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: color .22s ease;
+}
+
+.service__name--muted { color: var(--ink-muted); }
+.service:hover .service__name { color: #000; }
+
+.services__divider {
+  height: 1px;
+  margin: 16px 0;
+  border: 0;
+  background: var(--line);
+}
+
+.topup {
+  display: grid;
+  grid-template-columns: 290px 1fr 342px 200px;
+  gap: 16px;
+  align-items: center;
+}
+
+.topup__app {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topup__app-icon {
+  display: block;
+  width: 76px;
+  height: 76px;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.topup__app-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.topup__app-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.topup__badge {
+  padding: 3px 8px;
+  border-radius: 8px;
+  background: #dff5e3;
+  color: #1f9440;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.topup__promo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--field);
+  color: #4a4a55;
+  font-size: 13px;
+  transition: background .16s ease;
+}
+
+.topup__promo:hover { background: #e6e6eb; }
+
+.topup__field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 64px;
+  padding: 0 16px;
+  border-radius: var(--radius-md);
+  background: var(--field);
+}
+
+.topup__field-icon {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  color: #9a9aa5;
+}
+
+.topup__field-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.topup__field-icon--round {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #dededf;
+  color: #6f6f7b;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.topup__field--login input {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  outline: none;
+}
+
+.topup__field--login input::placeholder { color: #9a9aa5; }
+
+.topup__hint {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: #e2e2e7;
+  color: #7a7a86;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: help;
+}
+
+.topup__amount {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.topup__amount-label { font-size: 12px; color: #9a9aa5; }
+.topup__amount-value { font-size: 15px; font-weight: 700; }
+
+/* Интерактив 3: переключатель валют, только активное состояние. */
+.currency { display: flex; gap: 6px; }
+
+.currency__button {
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: #e2e2e7;
+  color: #8b8b96;
+  font-size: 15px;
+  font-weight: 600;
+  transition: background .16s ease, color .16s ease;
+}
+
+.currency__button:hover { background: #d6d6dd; color: #55555f; }
+
+.currency__button.is-active {
+  background: var(--ink);
+  color: #fff;
+}
+
+.topup__pay {
+  height: 64px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--ink);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  transition: background .18s ease;
+}
+
+.topup__pay:hover { background: #2b2b35; }

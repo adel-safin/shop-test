@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Заказ</title>
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/utility.css">
+</head>
+<body>
+  <div class="utility">
+    <h1>Заказ <span class="mono" data-order-id></span></h1>
+
+    <section class="panel">
+      <dl class="rows">
+        <dt>Статус</dt><dd><span class="status" data-status>загрузка</span></dd>
+        <dt>Товар</dt><dd data-sku>—</dd>
+        <dt>Цена</dt><dd data-base>—</dd>
+        <dt>Скидка</dt><dd data-discount>—</dd>
+        <dt>К оплате</dt><dd data-amount>—</dd>
+      </dl>
+
+      <div data-code-box hidden>
+        <p class="muted" style="margin:16px 0 8px">Ваш ключ</p>
+        <div class="code" data-code></div>
+      </div>
+
+      <p class="muted" data-hint style="margin:16px 0 0"></p>
+
+      <div class="actions">
+        <button class="btn" type="button" data-pay="success">Оплатить (успех)</button>
+        <button class="btn btn--danger" type="button" data-pay="fail">Оплатить (неуспех)</button>
+        <a class="btn btn--ghost" href="/">На витрину</a>
+        <a class="btn btn--ghost" href="/admin.html">Админка</a>
+      </div>
+
+      <pre class="log" data-log hidden></pre>
+    </section>
+  </div>
+
+  <script type="module" src="/js/order.js"></script>
+</body>
+</html>

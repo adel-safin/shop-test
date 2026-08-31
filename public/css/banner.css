@@ -1,0 +1,118 @@
+.banner {
+  position: relative;
+  height: 263px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #101018;
+}
+
+.banner__track {
+  position: relative;
+  height: 100%;
+}
+
+.banner__slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 56px;
+  color: #fff;
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity .45s ease, transform .45s ease;
+  pointer-events: none;
+}
+
+.banner__slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.banner__slide--one   { background: radial-gradient(120% 140% at 12% 20%, #1b3a63 0%, #0d1424 62%); }
+.banner__slide--two   { background: radial-gradient(120% 140% at 18% 30%, #4a2036 0%, #14101c 65%); }
+.banner__slide--three { background: radial-gradient(120% 140% at 15% 25%, #2c2a68 0%, #100f1e 65%); }
+.banner__slide--four  { background: radial-gradient(120% 140% at 20% 20%, #1d4a3c 0%, #0c1614 65%); }
+
+.banner__kicker {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .62);
+}
+
+.banner__title {
+  margin: 0;
+  max-width: 620px;
+  font-size: 34px;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.banner__text {
+  margin: 0;
+  color: rgba(255, 255, 255, .72);
+  font-size: 15px;
+}
+
+/* Скругление снизу слева повторяет вырез в макете, куда посажены стрелки. */
+.banner__controls {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  gap: 2px;
+  padding: 0 4px;
+  height: 40px;
+  background: var(--page-bg);
+  border-bottom-left-radius: var(--radius-md);
+}
+
+.banner__arrow {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #43434f;
+  transition: background .16s ease, color .16s ease;
+}
+
+.banner__arrow:hover { background: var(--field); color: var(--ink); }
+
+.banner__arrow svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.banner__dots {
+  position: absolute;
+  right: 24px;
+  bottom: 20px;
+  display: flex;
+  gap: 4px;
+}
+
+.banner__dot {
+  width: 20px;
+  height: 4px;
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, .35);
+  transition: background .2s ease, width .2s ease;
+}
+
+.banner__dot:hover { background: rgba(255, 255, 255, .6); }
+.banner__dot.is-active { background: #fff; width: 28px; }

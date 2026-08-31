@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Админка</title>
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/utility.css">
+</head>
+<body>
+  <div class="utility">
+    <h1>Админка</h1>
+
+    <section class="panel">
+      <h2>Доступ</h2>
+      <div class="field">
+        <input type="password" data-token placeholder="admin token" value="dev-admin-token">
+        <button class="btn" type="button" data-refresh>Обновить</button>
+        <a class="btn btn--ghost" href="/">На витрину</a>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Оплачен, но не выдан</h2>
+      <table>
+        <thead>
+          <tr><th>Заказ</th><th>Товар</th><th>Статус</th><th>Причина</th><th>Ключей в пуле</th><th></th></tr>
+        </thead>
+        <tbody data-orders>
+          <tr><td colspan="6" class="muted">нажмите «Обновить»</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>Пул ключей</h2>
+      <div class="field">
+        <input type="text" data-sku value="KEY-CS2-PRIME">
+        <button class="btn" type="button" data-pool>Показать</button>
+        <button class="btn" type="button" data-refill>Пополнить на 5</button>
+        <button class="btn btn--danger" type="button" data-drain>Осушить</button>
+      </div>
+      <p class="muted" data-pool-info style="margin:12px 0 0">—</p>
+    </section>
+
+    <section class="panel">
+      <h2>Промокоды</h2>
+      <table>
+        <thead><tr><th>Код</th><th>Тип</th><th>Значение</th><th>Использовано</th></tr></thead>
+        <tbody data-promocodes>
+          <tr><td colspan="4" class="muted">нажмите «Обновить»</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <pre class="log" data-log hidden></pre>
+  </div>
+
+  <script type="module" src="/js/admin.js"></script>
+</body>
+</html>

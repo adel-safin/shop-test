@@ -1,0 +1,122 @@
+.header {
+  position: relative;
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+}
+
+.header__inner {
+  width: var(--content-width);
+  height: 80px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 192px 688px 1fr;
+  align-items: center;
+  gap: 76px;
+}
+
+.catalog-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: 120px;
+  height: 44px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--ink);
+  color: #fff;
+  font-weight: 600;
+  transition: background .18s ease;
+}
+
+.catalog-button:hover { background: #2b2b35; }
+
+.catalog-button__icon {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 44px;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+}
+
+.search__input {
+  flex: 1;
+  height: 100%;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  outline: none;
+}
+
+.search__input::placeholder { color: var(--ink-muted); }
+
+.search__favorite,
+.search__submit {
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+}
+
+.search__favorite {
+  width: 32px;
+  height: 32px;
+  margin-right: 4px;
+  border-radius: 8px;
+  color: #b9b9c2;
+  transition: color .18s ease;
+}
+
+.search__favorite:hover { color: #ef4b6a; }
+.search__favorite svg { width: 15px; height: 14px; fill: currentColor; }
+
+.search__submit {
+  width: 40px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--ink);
+  color: #fff;
+}
+
+.search__submit svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+.header__profile {
+  justify-self: end;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--field);
+  color: #6f6f7b;
+  transition: background .18s ease;
+}
+
+.header__profile:hover { background: #e4e4e9; }
+
+.header__profile svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
