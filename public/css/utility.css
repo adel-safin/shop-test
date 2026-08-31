@@ -65,6 +65,12 @@
 .btn--danger { background: #b02a3a; }
 .btn--danger:hover { background: #91222f; }
 
+.btn[disabled] {
+  background: var(--field);
+  color: #a6a6b0;
+  cursor: not-allowed;
+}
+
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
 th, td { padding: 9px 10px; text-align: left; border-bottom: 1px solid var(--line); }
 th { color: var(--ink-muted); font-weight: 600; }
