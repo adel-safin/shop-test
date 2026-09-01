@@ -13,7 +13,7 @@ function cardTemplate(product) {
   const stock = Number(product.free_keys);
 
   card.innerHTML = `
-    <img class="card__cover" src="/assets/card-cover.png" alt="">
+    <img class="card__cover" src="assets/card-cover.png" alt="">
     <div class="card__body">
       <h3 class="card__title">💥 ${product.name} 🔑 РФ+СНГ</h3>
       <div class="card__prices">
@@ -36,16 +36,38 @@ async function buy(button, sku) {
 
   try {
     const order = await api.createOrder(sku, inFlight.get(sku));
-    window.location.href = `/order.html?id=${encodeURIComponent(order.id)}`;
+    window.location.href = `order.html?id=${encodeURIComponent(order.id)}`;
   } catch (error) {
     inFlight.delete(sku);
     button.textContent = label;
-    alert(`Не удалось создать заказ: ${error.message}`);
+    const offline = error.message === 'Failed to fetch' || error.name === 'TypeError';
+    alert(offline
+      ? 'Покупка идёт через локальный бэкенд. Запустите npm start и откройте http://localhost:3000'
+      : `Не удалось создать заказ: ${error.message}`);
+  }
+}
+
+async function loadProducts() {
+  try {
+    return await api.products();
+  } catch {
+    const data = await fetch('catalog.json').then((r) => r.json());
+    return {
+      products: data.products.map((item) => ({
+        sku: item.sku,
+        name: item.name,
+        type: item.type,
+        price_kopecks: item.price * 100,
+        currency: item.currency,
+        image: item.image,
+        free_keys: item.sku === 'KEY-CS2-PRIME' ? 50 : 0,
+      })),
+    };
   }
 }
 
 export async function initProducts(rows) {
-  const { products } = await api.products();
+  const { products } = await loadProducts();
 
   // Товар с непустым пулом показываем первым: на нём виден основной путь выдачи.
   const ordered = [...products].sort((a, b) => Number(b.free_keys) - Number(a.free_keys));
