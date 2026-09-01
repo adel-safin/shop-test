@@ -9,7 +9,6 @@ const DELIVERABLE = new Set([
   STATUS.paid, STATUS.delivering, STATUS.outOfStock, STATUS.deliveryFailed,
 ]);
 
-// Шаг 1. Под блокировкой заказа решаем, кто именно идёт к поставщику.
 // Транзакция закрывается до сетевого вызова: держать блокировку поверх HTTP нельзя.
 async function claimForDelivery(orderId, { force = false } = {}) {
   return withTransaction(async (client) => {
@@ -42,8 +41,7 @@ async function claimForDelivery(orderId, { force = false } = {}) {
   });
 }
 
-// Шаг 3. Записываем результат. PK по order_id решает исход, если сюда
-// одновременно пришли два воркера.
+// PK по order_id решает исход, если сюда одновременно пришли два воркера.
 async function commitDelivery(orderId, { code, provider, requestId }) {
   return withTransaction(async (client) => {
     await lockOrder(client, orderId);
