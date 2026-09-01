@@ -1,4 +1,4 @@
-import { api, rubles } from './api.js';
+import { api, isStaticHost, rubles } from './api.js';
 
 // Ключ идемпотентности живёт, пока запрос по этому товару в полёте. Второй клик
 // попадает в тот же ключ, сервер отдаёт тот же заказ вместо второго.
@@ -29,6 +29,11 @@ function cardTemplate(product) {
 }
 
 async function buy(button, sku) {
+  if (isStaticHost()) {
+    alert('Покупка идёт через локальный бэкенд. Запустите npm start и откройте http://localhost:3000');
+    return;
+  }
+
   const label = button.textContent;
   button.textContent = 'Оформляем...';
 
@@ -40,7 +45,8 @@ async function buy(button, sku) {
   } catch (error) {
     inFlight.delete(sku);
     button.textContent = label;
-    const offline = error.message === 'Failed to fetch' || error.name === 'TypeError';
+    const offline = error.name === 'TimeoutError' || error.name === 'AbortError'
+      || error.message === 'Failed to fetch' || error.name === 'TypeError';
     alert(offline
       ? 'Покупка идёт через локальный бэкенд. Запустите npm start и откройте http://localhost:3000'
       : `Не удалось создать заказ: ${error.message}`);
@@ -48,22 +54,24 @@ async function buy(button, sku) {
 }
 
 async function loadProducts() {
-  try {
-    return await api.products();
-  } catch {
-    const data = await fetch('catalog.json').then((r) => r.json());
-    return {
-      products: data.products.map((item) => ({
-        sku: item.sku,
-        name: item.name,
-        type: item.type,
-        price_kopecks: item.price * 100,
-        currency: item.currency,
-        image: item.image,
-        free_keys: item.sku === 'KEY-CS2-PRIME' ? 50 : 0,
-      })),
-    };
+  if (!isStaticHost()) {
+    try {
+      return await api.products();
+    } catch { /* дальше catalog.json */ }
   }
+
+  const data = await fetch('catalog.json').then((r) => r.json());
+  return {
+    products: data.products.map((item) => ({
+      sku: item.sku,
+      name: item.name,
+      type: item.type,
+      price_kopecks: item.price * 100,
+      currency: item.currency,
+      image: item.image,
+      free_keys: item.sku === 'KEY-CS2-PRIME' ? 50 : 0,
+    })),
+  };
 }
 
 export async function initProducts(rows) {

@@ -3,6 +3,8 @@ async function request(method, path, { body, headers } = {}) {
     method,
     headers: { 'content-type': 'application/json', ...headers },
     body: body === undefined ? undefined : JSON.stringify(body),
+    // На Pages /api нет: без таймаута fetch к github.io/api/... висит, пока CDN не ответит 404.
+    signal: AbortSignal.timeout(2500),
   });
 
   const text = await response.text();
@@ -39,5 +41,4 @@ export const admin = (token) => ({
   promocodes: () => request('GET', '/admin/promocodes', { headers: { 'x-admin-token': token } }),
 });
 
-export const rubles = (kopecks) =>
-  `${(kopecks / 100).toLocaleString('ru-RU', { maximumFractionDigits: 0 })} ₽`;
+export const isStaticHost = () => /\.github\.io$/.test(location.hostname);
